@@ -25,7 +25,7 @@ variable "ha_gw" {
   default     = true
 }
 
-variable "transit_gateway" {
+variable "transit_gw" {
 }
 
 variable "transit_vnet" {

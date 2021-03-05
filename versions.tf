@@ -4,8 +4,8 @@ terraform {
       source = "aviatrixsystems/aviatrix"
     }
     azurerm = {
-      source  = "hashicorp/azurerm"
-    }    
+      source = "hashicorp/azurerm"
+    }
   }
   required_version = ">= 0.13"
 }

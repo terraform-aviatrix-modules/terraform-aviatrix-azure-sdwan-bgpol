@@ -36,7 +36,7 @@ end
 config router static
     edit 1
         set gateway ${lan_gateway}
-        set dst ${transit_peering_lan}
+        set dst ${bgp_peer}
         set device port2
     next
 end

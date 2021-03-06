@@ -9,7 +9,7 @@ resource "azurerm_virtual_machine" "default" {
     publisher = "fortinet"
     offer     = "fortinet_fortigate-vm_v5"
     sku       = "fortinet_fg-vm_payg_20190624"
-    version   = "6.2.3"
+    version   = "6.2.5"
   }
 
   plan {

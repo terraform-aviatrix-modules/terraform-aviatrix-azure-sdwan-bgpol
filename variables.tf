@@ -46,6 +46,16 @@ variable "instance_size" {
   default     = "Standard_B2ms"
 }
 
+variable "username" {
+  type = string
+  default = "azureadmin"
+}
+
+variable "password" {
+  type = string
+  default = "Aviatrix#1234"
+}
+
 locals {
   region  = var.region != "" ? var.region : var.transit_gw.vpc_reg
   account = var.account != "" ? var.account : var.transit_gw.account_name

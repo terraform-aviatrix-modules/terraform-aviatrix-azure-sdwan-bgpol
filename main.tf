@@ -26,6 +26,8 @@ resource "aviatrix_transit_external_device_conn" "default" {
   tunnel_protocol   = "LAN"
   bgp_local_as_num  = var.transit_gw.local_as_number
   bgp_remote_as_num = var.sdwan_as_number
-  remote_lan_ip     = "172.12.13.14"
+  remote_lan_ip     = azurerm_network_interface.fgtport2.private_ip_address
   remote_vpc_name   = aviatrix_vpc.default.vpc_id
+
+  depends_on = [ aviatrix_azure_peer.sdwan_transit_peering, ]
 }

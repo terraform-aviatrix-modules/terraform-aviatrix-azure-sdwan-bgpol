@@ -49,6 +49,7 @@ resource "azurerm_virtual_machine" "default" {
 data "template_file" "fgtvm" {
   template = templatefile("${path.module}/fortigate.tpl", {
       hostname = "SDWAN"
+      bgp_peer = aviatrix_transit_external_device_conn.default.local_lan_ip 
   })
 }
 
@@ -132,9 +133,9 @@ resource "azurerm_network_interface" "fgtport1" {
   resource_group_name = aviatrix_vpc.default.resource_group
 
   ip_configuration {
-    name                          = "ipconfig1"
+    name                          = "${var.name}-ipconfig1"
     subnet_id                     = aviatrix_vpc.default.public_subnets[0].subnet_id
-    private_ip_address_allocation = "static"
+    private_ip_address_allocation = "Dynamic"
     primary                       = true
     public_ip_address_id          = azurerm_public_ip.public_ip.id
   }

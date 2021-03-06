@@ -47,12 +47,12 @@ variable "instance_size" {
 }
 
 variable "username" {
-  type = string
+  type    = string
   default = "azureadmin"
 }
 
 variable "password" {
-  type = string
+  type    = string
   default = "Aviatrix#1234"
 }
 

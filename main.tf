@@ -41,7 +41,7 @@ resource "azurerm_route_table" "sdwan_to_transit" {
   route {
     name                   = "to_aviatrix"
     address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "vnetlocaVirtualAppliance"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = aviatrix_transit_external_device_conn.default.local_lan_ip
   }
 }
@@ -55,7 +55,7 @@ resource "azurerm_route_table" "transit_to_sdwan" {
   route {
     name                   = "to_sdwan"
     address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "vnetlocaVirtualAppliance"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_network_interface.fgtport2.private_ip_address
   }
 }

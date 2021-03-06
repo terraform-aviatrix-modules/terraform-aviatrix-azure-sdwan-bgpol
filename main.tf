@@ -10,12 +10,12 @@ resource "aviatrix_vpc" "default" {
 }
 
 resource "aviatrix_azure_peer" "sdwan_transit_peering" {
-  account_name1             = var.account
-  account_name2             = local.account
+  account_name1             = local.account
+  account_name2             = var.transit_gw.account_name
   vnet_name_resource_group1 = aviatrix_vpc.default.vpc_id
   vnet_name_resource_group2 = var.transit_gw.vpc_id
-  vnet_reg1                 = var.region
-  vnet_reg2                 = local.region
+  vnet_reg1                 = local.region
+  vnet_reg2                 = var.transit_gw.vpc_reg
 }
 
 resource "aviatrix_transit_external_device_conn" "default" {

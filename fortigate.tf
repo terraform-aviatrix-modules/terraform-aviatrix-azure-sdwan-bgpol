@@ -71,11 +71,11 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
   resource_group_name = aviatrix_vpc.default.resource_group
 
   security_rule {
-    name                       = "TCP"
+    name                       = "All-In"
     priority                   = 1001
     direction                  = "Inbound"
     access                     = "Allow"
-    protocol                   = "Tcp"
+    protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
     source_address_prefix      = "*"
@@ -83,7 +83,7 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
   }
 
   security_rule {
-    name                       = "All"
+    name                       = "All-Out"
     priority                   = 1001
     direction                  = "Outbound"
     access                     = "Allow"
@@ -101,7 +101,7 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
   resource_group_name = aviatrix_vpc.default.resource_group
 
   security_rule {
-    name                       = "All"
+    name                       = "All-In"
     priority                   = 1001
     direction                  = "Inbound"
     access                     = "Allow"
@@ -113,7 +113,7 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
   }
 
   security_rule {
-    name                       = "All"
+    name                       = "All-Out"
     priority                   = 1001
     direction                  = "Outbound"
     access                     = "Allow"

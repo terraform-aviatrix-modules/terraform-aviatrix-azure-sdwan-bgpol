@@ -50,6 +50,10 @@ data "template_file" "fgtvm" {
   template = templatefile("${path.module}/fortigate.tpl", {
       hostname = "SDWAN"
       bgp_peer = aviatrix_transit_external_device_conn.default.local_lan_ip 
+      transit_asn = var.transit_gw.local_as_number
+      sdwan_asn = var.sdwan_as_number
+      lan_gateway = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr,1)
+      transit_peering_lan = "1.1.1.1/32" #temp dummy
   })
 }
 

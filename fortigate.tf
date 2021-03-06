@@ -52,7 +52,9 @@ resource "azurerm_virtual_machine" "default" {
 }
 
 data "template_file" "fgtvm" {
-  template = templatefile("${path.module}/fgt.tpl")
+  template = templatefile("${path.module}/fgt.tpl", {
+      hostname = "SDWAN"
+  })
 }
 
 // Allocated Public IP

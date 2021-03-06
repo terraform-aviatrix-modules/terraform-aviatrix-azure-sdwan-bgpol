@@ -1,5 +1,5 @@
 config system global
-set hostname SDWAN
+set hostname ${hostname}
 end
 config system interface
 edit port1

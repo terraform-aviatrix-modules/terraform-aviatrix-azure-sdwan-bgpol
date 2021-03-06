@@ -52,7 +52,7 @@ resource "azurerm_virtual_machine" "default" {
 }
 
 data "template_file" "fgtvm" {
-  template = file("fgt.conf")
+  template = templatefile("${path.module}/fgt.tpl")
 }
 
 // Allocated Public IP

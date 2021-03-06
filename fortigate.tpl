@@ -36,7 +36,8 @@ end
 config router static
     edit 1
         set gateway ${lan_gateway}
-        set destination ${transit_peering_lan}
+        set dst ${transit_peering_lan}
+        set device port2
     next
 end
 config firewall policy

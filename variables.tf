@@ -40,9 +40,8 @@ variable "sdwan_as_number" {
   type = number
 }
 
-
 variable "instance_size" {
-  description = "Azure Instance size for the Aviatrix gateways"
+  description = "Azure Instance size for the SDWAN gateways"
   type        = string
   default     = "Standard_B2ms"
 }

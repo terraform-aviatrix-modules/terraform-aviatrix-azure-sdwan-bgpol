@@ -133,7 +133,7 @@ resource "azurerm_network_interface" "fgtport1" {
 
   ip_configuration {
     name                          = "ipconfig1"
-    subnet_id                     = aviatrix_vpc.default.public_subnets[0]
+    subnet_id                     = aviatrix_vpc.default.public_subnets[0].subnet_id
     private_ip_address_allocation = "static"
     primary                       = true
     public_ip_address_id          = azurerm_public_ip.public_ip.id
@@ -147,7 +147,7 @@ resource "azurerm_network_interface" "fgtport2" {
 
   ip_configuration {
     name                          = "${var.name}-ipconfig1"
-    subnet_id                     = aviatrix_vpc.default.private_subnets[0]
+    subnet_id                     = aviatrix_vpc.default.private_subnets[0].subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }

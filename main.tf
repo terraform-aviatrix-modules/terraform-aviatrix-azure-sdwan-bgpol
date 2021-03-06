@@ -29,5 +29,33 @@ resource "aviatrix_transit_external_device_conn" "default" {
   remote_lan_ip     = azurerm_network_interface.fgtport2.private_ip_address
   remote_vpc_name   = aviatrix_vpc.default.vpc_id
 
-  depends_on = [ aviatrix_azure_peer.sdwan_transit_peering, ]
+  depends_on = [aviatrix_azure_peer.sdwan_transit_peering, ]
+}
+
+resource "azurerm_route_table" "sdwan_to_transit" {
+  name                          = "${var.name}-sdwan-transit"
+  location                      = local.region
+  resource_group_name           = aviatrix_vpc.default.resource_group
+  disable_bgp_route_propagation = true
+
+  route {
+    name                   = "to_aviatrix"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "vnetlocaVirtualAppliance"
+    next_hop_in_ip_address = aviatrix_transit_external_device_conn.default.local_lan_ip
+  }
+}
+
+resource "azurerm_route_table" "transit_to_sdwan" {
+  name                          = "${var.name}-transit-sdwan"
+  location                      = local.region
+  resource_group_name           = aviatrix_vpc.default.resource_group
+  disable_bgp_route_propagation = true
+
+  route {
+    name                   = "to_sdwan"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "vnetlocaVirtualAppliance"
+    next_hop_in_ip_address = azurerm_network_interface.fgtport2.private_ip_address
+  }
 }

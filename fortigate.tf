@@ -48,11 +48,11 @@ resource "azurerm_virtual_machine" "default" {
 
 data "template_file" "fgtvm" {
   template = templatefile("${path.module}/fortigate.tpl", {
-    hostname            = "SDWAN"
-    bgp_peer            = aviatrix_transit_external_device_conn.default.local_lan_ip
-    transit_asn         = var.transit_gw.local_as_number
-    sdwan_asn           = var.sdwan_as_number
-    lan_gateway         = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
+    hostname    = "SDWAN"
+    bgp_peer    = aviatrix_transit_external_device_conn.default.local_lan_ip
+    transit_asn = var.transit_gw.local_as_number
+    sdwan_asn   = var.sdwan_as_number
+    lan_gateway = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
   })
 }
 
@@ -81,6 +81,18 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  security_rule {
+    name                       = "All"
+    priority                   = 1001
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_network_security_group" "privatenetworknsg" {
@@ -99,34 +111,18 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
-}
 
-resource "azurerm_network_security_rule" "outgoing_public" {
-  name                        = "egress"
-  priority                    = 100
-  direction                   = "Outbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = aviatrix_vpc.default.resource_group
-  network_security_group_name = azurerm_network_security_group.publicnetworknsg.name
-}
-
-resource "azurerm_network_security_rule" "outgoing_private" {
-  name                        = "egress-private"
-  priority                    = 100
-  direction                   = "Outbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = aviatrix_vpc.default.resource_group
-  network_security_group_name = azurerm_network_security_group.privatenetworknsg.name
+  security_rule {
+    name                       = "All"
+    priority                   = 1001
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 // FGT Network Interface port1

@@ -48,6 +48,6 @@ variable "instance_size" {
 }
 
 locals {
-  region  = var.region ? var.region : var.transit_gw.vpc_reg
-  account = var.account ? var.account : var.transit_gw.account_name
+  region  = var.region != "" ? var.region : var.transit_gw.vpc_reg
+  account = var.account != "" ? var.account : var.transit_gw.account_name
 }

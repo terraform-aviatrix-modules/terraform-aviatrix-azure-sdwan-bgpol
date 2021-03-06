@@ -46,16 +46,7 @@ resource "azurerm_route_table" "sdwan_to_transit" {
   }
 }
 
-resource "azurerm_route_table" "transit_to_sdwan" {
-  name                          = "${var.name}-transit-sdwan"
-  location                      = local.region
-  resource_group_name           = split(":", var.transit_gw.vpc_id)[1]
-  disable_bgp_route_propagation = true
-
-  route {
-    name                   = "to_sdwan"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = azurerm_network_interface.fgtport2.private_ip_address
-  }
+resource "azurerm_subnet_route_table_association" "sdwan_to_transit" {
+  subnet_id      = aviatrix_vpc.default.public_subnets[2].subnet_id
+  route_table_id = azurerm_route_table.sdwan_to_transit.id
 }

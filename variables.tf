@@ -35,6 +35,11 @@ variable "sdwan_solution" {
   type = string
 }
 
+variable "sdwan_as_number" {
+  type = number
+}
+
+
 variable "instance_size" {
   description = "Azure Instance size for the Aviatrix gateways"
   type        = string

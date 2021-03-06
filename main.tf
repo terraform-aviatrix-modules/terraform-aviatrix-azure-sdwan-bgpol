@@ -22,3 +22,15 @@ resource "azurerm_virtual_network_peering" "transit_to_sdwan" {
   virtual_network_name      = var.transit_vnet.azure_vnet_resource_id
   remote_virtual_network_id = aviatrix_vpc.default.azure_vnet_resource_id
 }
+
+resource "aviatrix_transit_external_device_conn" "ex-conn" {
+  vpc_id            = var.transit_gw.vpc_id
+  connection_name   = "${var.name}-bgp-peering"
+  gw_name           = var.transit_gw.gw_name
+  connection_type   = "bgp"
+  tunnel_protocol   = "LAN"
+  bgp_local_as_num  = var.transit_gw.local_as_number
+  bgp_remote_as_num = var.sdwan_as_number
+  remote_lan_ip     = "172.12.13.14"
+  remote_vpc_name   = aviatrix_vpc.default.vpc_id
+}

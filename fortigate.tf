@@ -128,9 +128,10 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
 
 // FGT Network Interface port1
 resource "azurerm_network_interface" "fgtport1" {
-  name                = "${var.name}-fgtport1"
-  location            = local.region
-  resource_group_name = aviatrix_vpc.default.resource_group
+  name                 = "${var.name}-fgtport1"
+  location             = local.region
+  resource_group_name  = aviatrix_vpc.default.resource_group
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "${var.name}-ipconfig1"
@@ -142,9 +143,10 @@ resource "azurerm_network_interface" "fgtport1" {
 }
 
 resource "azurerm_network_interface" "fgtport2" {
-  name                = "${var.name}-fgtport2"
-  location            = local.region
-  resource_group_name = aviatrix_vpc.default.resource_group
+  name                 = "${var.name}-fgtport2"
+  location             = local.region
+  resource_group_name  = aviatrix_vpc.default.resource_group
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "${var.name}-ipconfig1"

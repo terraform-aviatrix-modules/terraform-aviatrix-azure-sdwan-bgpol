@@ -45,6 +45,10 @@ variable "sdwan_as_number" {
   type = number
 }
 
+variable "pre_shared_key" {
+  type = string
+}
+
 variable "instance_size" {
   description = "Azure Instance size for the SDWAN gateways"
   type        = string

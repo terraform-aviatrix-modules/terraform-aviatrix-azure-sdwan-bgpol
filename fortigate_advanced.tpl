@@ -3,7 +3,6 @@ config system global
     set timezone 04
     set admintimeout 60
 end
-
 config vpn ipsec phase1-interface
     edit "HUB"
         set interface "port1"
@@ -34,7 +33,6 @@ config vpn ipsec phase2-interface
         set keylifeseconds 1800
     next
 end
-
 config system interface
     edit port1
         set alias public
@@ -96,7 +94,7 @@ end
 config router static
     edit 1
         set gateway ${lan_gateway}
-        set dst ${bgp_peer}/32
+        set dst ${bgp_peer} 255.255.255.255
         set device port2
     next
 end

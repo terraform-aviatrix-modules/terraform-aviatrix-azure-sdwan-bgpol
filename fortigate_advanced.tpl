@@ -3,6 +3,38 @@ config system global
     set timezone 04
     set admintimeout 60
 end
+
+config vpn ipsec phase1-interface
+    edit "HUB"
+        set interface "port1"
+        set type dynamic
+        set ike-version 2
+        set keylife 28800
+        set peertype any
+        set net-device disable
+        set proposal aes256-sha256
+        set add-route disable
+        set auto-discovery-sender enable
+        set tunnel-search nexthop
+        set psksecret ${pre_shared_key}
+        set dpd-retryinterval 5
+        set dpd on-idle        
+        set mode-cfg enable
+        set assign-ip enable
+        set assign-ip-from range
+        set ipv4-start-ip 172.16.1.10
+        set ipv4-end-ip 172.16.1.100
+        set ipv4-netmask 255.255.255.0        
+    next
+end
+config vpn ipsec phase2-interface
+    edit "HUB"
+        set phase1name "HUB"
+        set proposal aes256-sha256
+        set keylifeseconds 1800
+    next
+end
+
 config system interface
     edit port1
         set alias public
@@ -64,7 +96,7 @@ end
 config router static
     edit 1
         set gateway ${lan_gateway}
-        set dst ${bgp_peer}
+        set dst ${bgp_peer}/32
         set device port2
     next
 end
@@ -89,35 +121,4 @@ config firewall policy
         set schedule "always"
         set service "ALL"
     next    
-end
-
-config vpn ipsec phase1-interface
-    edit "HUB"
-        set interface "port1"
-        set type dynamic
-        set ike-version 2
-        set keylife 28800
-        set peertype any
-        set net-device disable
-        set proposal aes256-sha256
-        set add-route disable
-        set auto-discovery-sender enable
-        set tunnel-search nexthop
-        set psksecret ${pre-shared-key}
-        set dpd-retryinterval 5
-        set dpd on-idle        
-        set mode-cfg enable
-        set assign-ip enable
-        set assign-ip-from range
-        set ipv4-start-ip 172.16.1.10
-        set ipv4-end-ip 172.16.1.100
-        set ipv4-netmask 255.255.255.0        
-    next
-end
-config vpn ipsec phase2-interface
-    edit "HUB"
-        set phase1name "HUB"
-        set proposal aes256-sha256
-        set keylifeseconds 1800
-    next
 end

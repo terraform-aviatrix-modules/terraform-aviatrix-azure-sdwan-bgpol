@@ -37,7 +37,7 @@ variable "sdwan_solution" {
 }
 
 variable "template" {
-  type = string
+  type    = string
   default = "fortigate_advanced"
 }
 

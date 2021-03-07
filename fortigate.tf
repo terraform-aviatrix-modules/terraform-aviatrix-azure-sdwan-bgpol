@@ -53,7 +53,7 @@ data "template_file" "fgtvm" {
     transit_asn    = var.transit_gw.local_as_number
     sdwan_asn      = var.sdwan_as_number
     lan_gateway    = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
-    pre-shared-key = var.pre_shared_key
+    pre_shared_key = var.pre_shared_key
   })
 }
 

@@ -1,11 +1,3 @@
-config system admin
-    edit "admin"
-        set accprofile "super_admin"
-        set vdom "root"
-        set password "${password}"
-    next
-end
-
 config system global
     set hostname ${hostname}
     set timezone 04

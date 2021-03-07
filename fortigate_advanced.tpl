@@ -3,7 +3,6 @@ config system admin
         set accprofile "super_admin"
         set vdom "root"
         set password "${password}"
-        set ssh-public-key1 "${ssh_key}"
     next
 end
 

@@ -44,6 +44,12 @@ resource "azurerm_virtual_machine" "default" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
+  lifecycle {
+    ignore_changes [
+        os_profile,
+    ]
+  }
 }
 
 data "template_file" "fgtvm" {

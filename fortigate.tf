@@ -47,7 +47,7 @@ resource "azurerm_virtual_machine" "default" {
 
   lifecycle {
     ignore_changes = [
-        os_profile,
+      os_profile,
     ]
   }
 }

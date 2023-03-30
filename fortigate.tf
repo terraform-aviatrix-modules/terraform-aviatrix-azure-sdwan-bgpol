@@ -58,11 +58,12 @@ resource "azurerm_virtual_machine" "default" {
 
 data "template_file" "fgtvm" {
   template = templatefile("${path.module}/${var.template}.tpl", {
-    hostname    = "SDWAN"
-    bgp_peer    = aviatrix_transit_external_device_conn.default.local_lan_ip
-    transit_asn = var.transit_gw.local_as_number
-    sdwan_asn   = var.sdwan_as_number
-    lan_gateway = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
+    hostname       = "SDWAN"
+    bgp_peer       = aviatrix_transit_external_device_conn.default.local_lan_ip
+    transit_asn    = var.transit_gw.local_as_number
+    sdwan_asn      = var.sdwan_as_number
+    lan_gateway    = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
+    pre_shared_key = var.pre_shared_key
   })
 }
 

@@ -61,6 +61,10 @@ variable "password" {
   default = "Aviatrix#1234"
 }
 
+variable "pre_shared_key" {
+  type = string
+}
+
 locals {
   region  = var.region != "" ? var.region : var.transit_gw.vpc_reg
   account = var.account != "" ? var.account : var.transit_gw.account_name
@@ -95,4 +99,9 @@ variable "fgtsku" {
     byol = "fortinet_fg-vm"
     payg = "fortinet_fg-vm_payg_2022"
   }
+}
+
+variable "fgtversion" {
+  type    = string
+  default = "7.0.11"
 }

@@ -45,10 +45,6 @@ variable "sdwan_as_number" {
   type = number
 }
 
-variable "pre_shared_key" {
-  type = string
-}
-
 variable "instance_size" {
   description = "Azure Instance size for the SDWAN gateways"
   type        = string
@@ -68,4 +64,35 @@ variable "password" {
 locals {
   region  = var.region != "" ? var.region : var.transit_gw.vpc_reg
   account = var.account != "" ? var.account : var.transit_gw.account_name
+}
+
+variable "size" {
+  type    = string
+  default = "Standard_F4"
+}
+
+// License Type to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either byol or payg.
+variable "license_type" {
+  default = "payg"
+}
+
+variable "publisher" {
+  type    = string
+  default = "fortinet"
+}
+
+variable "fgtoffer" {
+  type    = string
+  default = "fortinet_fortigate-vm_v5"
+}
+
+// BYOL sku: fortinet_fg-vm
+// PAYG sku: fortinet_fg-vm_payg_20190624
+variable "fgtsku" {
+  type = map(any)
+  default = {
+    byol = "fortinet_fg-vm"
+    payg = "fortinet_fg-vm_payg_2022"
+  }
 }

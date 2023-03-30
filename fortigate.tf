@@ -5,17 +5,21 @@ resource "azurerm_virtual_machine" "default" {
   network_interface_ids        = [azurerm_network_interface.fgtport1.id, azurerm_network_interface.fgtport2.id]
   primary_network_interface_id = azurerm_network_interface.fgtport1.id
   vm_size                      = var.instance_size
+
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+
   storage_image_reference {
-    publisher = "fortinet"
-    offer     = "fortinet_fortigate-vm_v5"
-    sku       = "fortinet_fg-vm_payg_20190624"
-    version   = "6.2.5"
+    publisher = var.publisher
+    offer     = var.fgtoffer
+    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    version   = var.fgtversion
   }
 
   plan {
-    name      = "fortinet_fg-vm_payg_20190624"
-    publisher = "fortinet"
-    product   = "fortinet_fortigate-vm_v5"
+    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    publisher = var.publisher
+    product   = var.fgtoffer
   }
 
   storage_os_disk {
@@ -54,12 +58,11 @@ resource "azurerm_virtual_machine" "default" {
 
 data "template_file" "fgtvm" {
   template = templatefile("${path.module}/${var.template}.tpl", {
-    hostname       = "SDWAN"
-    bgp_peer       = aviatrix_transit_external_device_conn.default.local_lan_ip
-    transit_asn    = var.transit_gw.local_as_number
-    sdwan_asn      = var.sdwan_as_number
-    lan_gateway    = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
-    pre_shared_key = var.pre_shared_key
+    hostname    = "SDWAN"
+    bgp_peer    = aviatrix_transit_external_device_conn.default.local_lan_ip
+    transit_asn = var.transit_gw.local_as_number
+    sdwan_asn   = var.sdwan_as_number
+    lan_gateway = cidrhost(aviatrix_vpc.default.public_subnets[2].cidr, 1)
   })
 }
 
